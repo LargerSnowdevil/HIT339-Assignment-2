@@ -1,0 +1,97 @@
+﻿@model AnyoneForTennis.Models.RegisterViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout_NoHeader.cshtml";
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+            </div>
+            <div>
+                <label class="control-label">Do you want to register as a Member or a Coach?</label>
+                <input  type="Button" name="Member" value="Member" onclick="ShowMember()" class="form-control" />
+                <input  type="Button" name="Coach" value="Coach" onclick="ShowCoach()" class="form-control" />
+                <input id="isCoachValue" type="hidden" asp-for="IsCoach" value="" />
+            </div>
+
+            <div style="display: none;" id="memberInfo">
+                <h2>Member</h2>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div style="display: none;" id="coachInfo">
+                <h2>Coach</h2>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label"></label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Biography" class="control-label"></label>
+                    <input asp-for="Biography" class="form-control" />
+                    <span asp-validation-for="Biography" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div style="display: none;" id="submitButton" class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+
+    function ShowMember() {
+        var memberInfo = document.getElementById("memberInfo");
+        var coachInfo = document.getElementById("coachInfo");
+        var saveBtn = document.getElementById("submitButton");
+
+        memberInfo.style.display = "";
+        coachInfo.style.display = "none";
+        saveBtn.style.display = "";
+
+        var rtnValue = document.getElementById("isCoachValue");
+        rtnValue.value = "false";
+    }
+
+    function ShowCoach() {
+        var memberInfo = document.getElementById("memberInfo");
+        var coachInfo = document.getElementById("coachInfo");
+        var saveBtn = document.getElementById("submitButton");
+
+        memberInfo.style.display = "none";
+        coachInfo.style.display = "";
+        saveBtn.style.display = "";
+
+        var rtnValue = document.getElementById("isCoachValue");
+        rtnValue.value = "true";
+    }
+</script>
