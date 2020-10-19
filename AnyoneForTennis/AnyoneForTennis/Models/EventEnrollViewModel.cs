@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AnyoneForTennis.Models
 {
-    public class Event
+    public class EventEnrollViewModel
     {
-        [Key]
-        public int EventId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -19,11 +17,6 @@ namespace AnyoneForTennis.Models
 
         public string Location { get; set; }
 
-        public int CoachId { get; set; }
-
-        [DisplayName("Running Coach")]
-        public Coach RunningCoach { get; set; }
-
-        public List<EventMember> EventMembers { get; set; }
+        public string RunningCoach { get; set; }
     }
 }

@@ -4,14 +4,16 @@ using AnyoneForTennis.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AnyoneForTennis.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201018050534_FixedSpelling")]
+    partial class FixedSpelling
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,9 +52,6 @@ namespace AnyoneForTennis.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CoachId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -62,9 +61,12 @@ namespace AnyoneForTennis.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("RunningCoachCoachId")
+                        .HasColumnType("int");
+
                     b.HasKey("EventId");
 
-                    b.HasIndex("CoachId");
+                    b.HasIndex("RunningCoachCoachId");
 
                     b.ToTable("Events");
                 });
@@ -81,7 +83,7 @@ namespace AnyoneForTennis.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("EventMembers");
+                    b.ToTable("EventMember");
                 });
 
             modelBuilder.Entity("AnyoneForTennis.Models.Member", b =>
@@ -305,9 +307,7 @@ namespace AnyoneForTennis.Migrations
                 {
                     b.HasOne("AnyoneForTennis.Models.Coach", "RunningCoach")
                         .WithMany("RunningEvents")
-                        .HasForeignKey("CoachId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RunningCoachCoachId");
                 });
 
             modelBuilder.Entity("AnyoneForTennis.Models.EventMember", b =>

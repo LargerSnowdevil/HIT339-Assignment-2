@@ -9,6 +9,7 @@ using AnyoneForTennis.Models;
 using Microsoft.AspNetCore.Authorization;
 using AnyoneForTennis.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace AnyoneForTennis.Controllers
 {
@@ -32,14 +33,29 @@ namespace AnyoneForTennis.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            //Todo Redirect to next action
-            return View();
-        }
+            if (this.User.IsInRole("Admin"))
+            {
+                HttpContext.Session.SetString("Role", "Admin");
+            }
+            else if (this.User.IsInRole("Coach"))
+            {
+                HttpContext.Session.SetString("Role", "Coach");
 
-        public IActionResult Privacy()
-        {
-            //Todo Remove later
-            return View();
+                foreach (var item in _context.Coaches)
+                {
+                    if (item.Username.CompareTo(this.User.Identity.Name) == 0)
+                    {
+                        HttpContext.Session.SetString("Id", item.CoachId.ToString());
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                HttpContext.Session.SetString("Role", "Member");
+            }
+            
+            return Redirect("Events/Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -157,6 +173,7 @@ namespace AnyoneForTennis.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

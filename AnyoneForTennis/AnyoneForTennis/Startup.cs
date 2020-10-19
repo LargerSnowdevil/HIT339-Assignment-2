@@ -49,7 +49,7 @@ namespace AnyoneForTennis
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(900);
+                options.IdleTimeout = TimeSpan.FromMinutes(120);
                 options.Cookie.IsEssential = true;
                 options.Cookie.HttpOnly = true;
             });
@@ -72,6 +72,7 @@ namespace AnyoneForTennis
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();

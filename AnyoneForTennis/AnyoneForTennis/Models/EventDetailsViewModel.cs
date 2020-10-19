@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace AnyoneForTennis.Models
 {
-    public class Event
+    public class EventDetailsViewModel
     {
-        [Key]
-        public int EventId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -19,11 +18,12 @@ namespace AnyoneForTennis.Models
 
         public string Location { get; set; }
 
+        [DisplayName("Coach")]
+        public string RunningCoach { get; set; }
+
         public int CoachId { get; set; }
 
-        [DisplayName("Running Coach")]
-        public Coach RunningCoach { get; set; }
-
-        public List<EventMember> EventMembers { get; set; }
+        [DisplayName("Enrolled Members")]
+        public List<string> Members { get; set; }
     }
 }

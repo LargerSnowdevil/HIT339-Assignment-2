@@ -1,4 +1,4 @@
-﻿@model AnyoneForTennis.Models.Event
+﻿@model AnyoneForTennis.Models.EventEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -27,6 +27,10 @@
                 <label asp-for="Location" class="control-label"></label>
                 <input asp-for="Location" class="form-control" />
                 <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RunningCoach" class="control-label"></label>
+                <select asp-for="RunningCoach" class="form-control" asp-items="ViewBag.CoachId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

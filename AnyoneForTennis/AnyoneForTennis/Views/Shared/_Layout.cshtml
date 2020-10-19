@@ -19,10 +19,57 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">My Schedule</a>
                         </li>
+                        @{
+                            var value = new Byte[20];
+                            bool succ = Context.Session.TryGetValue("Role", out value);
+
+                            if (succ)
+                            {
+                                var role = System.Text.Encoding.UTF8.GetString(value);
+
+                                if (role.CompareTo("Admin") == 0)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Coaches" asp-action="Index">Coaches</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Index">Members</a>
+                                    </li>
+                                }
+                                else if (role.CompareTo("Coach") == 0)
+                                {
+                                    value = null;
+                                    succ = Context.Session.TryGetValue("Id", out value);
+
+                                    if (succ)
+                                    {
+                                        int intValue;
+                                        var notInt = System.Text.Encoding.UTF8.GetString(value);
+                                        var intSucc = Int32.TryParse(notInt, out intValue);
+
+                                        if (intSucc)
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Coaches" asp-action="Edit" asp-route-id="@intValue">Edit Profile</a>
+                                            </li>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="EventList">Browse Events</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Coaches" asp-action="Index">Coaches</a>
+                                    </li>
+                                }
+                            }
+                        }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -37,7 +84,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - AnyoneForTennis - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - AnyoneForTennis
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

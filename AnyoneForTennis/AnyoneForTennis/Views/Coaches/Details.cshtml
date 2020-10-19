@@ -10,33 +10,45 @@
     <h4>Coach</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Age)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Age)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Biography)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Biography)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Username)
-        </dd>
+        @{
+            var role = ViewData["Role"] as String;
+
+            if (role.CompareTo("Admin") == 0)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Username)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Username)
+                </dd>
+            }
+        }
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.CoachId">Edit</a> |
+    @{
+        if (role.CompareTo("Admin") == 0)
+        {
+            <a asp-action="Edit" asp-route-id="@Model.CoachId">Edit</a> <span> | </span>
+        }
+    }
     <a asp-action="Index">Back to List</a>
 </div>

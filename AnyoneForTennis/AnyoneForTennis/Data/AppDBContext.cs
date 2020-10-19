@@ -21,6 +21,8 @@ namespace AnyoneForTennis.Data
 
         public DbSet<Event> Events { get; set; }
 
+        public DbSet<EventMember> EventMembers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

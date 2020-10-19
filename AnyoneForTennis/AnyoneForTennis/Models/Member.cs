@@ -9,7 +9,7 @@ namespace AnyoneForTennis.Models
     public class Member
     {
         [Key]
-        public int MemeberId { get; set; }
+        public int MemberId { get; set; }
 
         public string Username { get; set; }
 
